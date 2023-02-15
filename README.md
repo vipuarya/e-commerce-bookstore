@@ -48,13 +48,3 @@
 3. Database used
 - MySQL
 
-### Database Creation:
-
-//will be added later
-
-
-#### "Suggestions and project Improvements are Invited!"
-
-<bold>Thanks a lot</bold><br/>
-                                                                                                        Project Leader<br/>
-                                                                                                         <b>Shashi Raj</b>
