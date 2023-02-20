@@ -1,9 +1,6 @@
 package com.shashirajraja.onlinebookstore.service;
 
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import javax.transaction.Transactional;
 
@@ -96,7 +93,10 @@ public class PaymentServiceImpl implements PaymentService {
 	@Transactional
 	public Set<PurchaseHistory> getPurchaseHistories(Customer customer) {
 		Set<PurchaseHistory> histories = new HashSet<PurchaseHistory>();
-		histories.addAll(purchaseHistoryRepos.findAllByCustomer(customer));
+		//If missing then only add
+		if(purchaseHistoryRepos.findAllByCustomer(customer).size() != customer.getPurchaseHistories().size()) {
+			histories.addAll(purchaseHistoryRepos.findAllByCustomer(customer));
+		}
 		customer.setPurchaseHistories(histories);
 		return histories;
 	}

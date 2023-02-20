@@ -57,7 +57,7 @@ public class BookServiceImpl implements BookService {
 		if(!bookOpt.isPresent())
 			return "Invalid Book ID";
 		
-		theBook.save(bookOpt.get());
+		theBook.delete(bookOpt.get());
 		
 		return "Book Deleted Successfully!";
 	}

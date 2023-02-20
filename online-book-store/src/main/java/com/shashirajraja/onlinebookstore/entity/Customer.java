@@ -43,7 +43,7 @@ public class Customer {
 												CascadeType.MERGE, CascadeType.REFRESH})
 	private User user;
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name="book_user", joinColumns=@JoinColumn(name="customer_id"), 
 								inverseJoinColumns=@JoinColumn(name="book_id"))
 	private Set<Book> books;

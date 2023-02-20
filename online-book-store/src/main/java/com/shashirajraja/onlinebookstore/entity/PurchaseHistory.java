@@ -70,13 +70,5 @@ public class PurchaseHistory {
 	public void setPurchaseDetails(Set<PurchaseDetail> purchaseDetails) {
 		this.purchaseDetails = purchaseDetails;
 	}
-
-	@Override
-	public String toString() {
-		return "PurchaseHistory [id=" + id + ", customer=" + customer.getUsername() + ", date=" + date + ", purchaseDetails="
-				+ purchaseDetails + "]";
-	}
-	
-	
 	
 }
