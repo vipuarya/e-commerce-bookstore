@@ -38,7 +38,6 @@ public class BookUserServiceImpl implements BookUserService {
 				books.add(obj.get());
 			}
 		}
-		customer.setBooks(books);
 		
 		return books;
 	}

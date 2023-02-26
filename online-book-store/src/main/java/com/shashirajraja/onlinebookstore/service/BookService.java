@@ -9,7 +9,8 @@ import com.shashirajraja.onlinebookstore.entity.Book;
 public interface BookService {
 
 	public Set<Book> getAllBooks();
-	
+	public Set<Book> getNonDeletedBooks();
+
 	public Book getBookById(int bookId);
 	
 	public String updateBook(Book book);

@@ -141,16 +141,6 @@
                                     <th>Actions <a href="${addBookLink}"><i class="fas fa-plus" style="font-size:24px;"></i></a></th>
                                 </tr>
                                 </thead>
-                                <tfoot>
-                                <tr>
-                                    <th>Id</th>
-                                    <th>Name</th>
-                                    <th>Type</th>
-                                    <th>Available</th>
-                                    <th>Price</th>
-                                    <th>Actions</th>
-                                </tr>
-                                </tfoot>
                                 <tbody>
                                 <c:forEach var="book" items="${books}">
                                     <!--URL for the add to cart option  -->
@@ -178,11 +168,6 @@
                         </div>
                     </div>
                 </div>
-                <c:if test="${message != null}">
-                    <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary"><a class="btn btn-success" href="${pageContext.request.contextPath}/sellers/cart">Proceed</a></h6>
-                    </div>
-                </c:if>
             </div>
             <!-- /.container-fluid -->
 
@@ -217,7 +202,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">ï¿½</span>
                 </button>
             </div>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
@@ -236,7 +221,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel1">Are you sure?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">ï¿½</span>
                 </button>
             </div>
             <div class="modal-body">You wanna delete this item.</div>

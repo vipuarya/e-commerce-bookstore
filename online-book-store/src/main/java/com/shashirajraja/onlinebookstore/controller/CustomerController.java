@@ -123,7 +123,7 @@ public class CustomerController {
 		
 		String message = theShoppingCartService.addItem(customer, theBookService.getBookById(bookId));
 						
-		Set<Book> books = theBookService.getAllBooks();
+		Set<Book> books = theBookService.getNonDeletedBooks();
 		
 		theModel.addAttribute("books", books);
 		
@@ -165,7 +165,7 @@ public class CustomerController {
 		Set<ShoppingCart> shoppingItems = theShoppingCartService.getAllItems(customer);
 		customer.setShoppingCart(shoppingItems);
 		theModel.addAttribute("message", message);
-		Set<Book> books = theBookService.getAllBooks();
+		Set<Book> books = theBookService.getNonDeletedBooks();
 		theModel.addAttribute("books", books);
 		theModel.addAttribute("shoppingItems", shoppingItems);
 		return "customer-books-list";

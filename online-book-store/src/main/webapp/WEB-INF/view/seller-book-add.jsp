@@ -170,15 +170,25 @@
                                                                placeholder="Enter Details"
                                                                required="required"/></td>
                                         <tr>
-                                            <td style="color:green;">Type:</td>
-                                            <td><form:input type="text" path="type"
-                                                            required="required"/></td>
-                                        </tr>
+                                        <td style="color:green;">Type:</td>
+                                        <td><form:select path="type" required="required">
+                                            <form:option value="" label="Select book type"/>
+                                            <form:option value="Horror" label="Horror"/>
+                                            <form:option value="Cubs" label="Cubs"/>
+                                            <form:option value="Science Fiction" label="Science Fiction"/>
+                                            <form:option value="Adventure" label="Adventure"/>
+                                            <form:option value="Motivational" label="Motivational"/>
+                                            <form:option value="Art" label="Art"/>
+                                            <form:option value="Health" label="Health"/>
+                                            <form:option value="Humor" label="Humor"/>
+                                        </form:select>
+                                        </td>
+                                    </tr>
                                     </form:form>
                                     </tr>
                                     <tr>
-                                        <td><input type="submit" class="button btn-success" value="Submit"/></td>
-                                        <td><a class="btn btn-default" href="/sellers/books/">Cancel</a></td>
+                                        <td><a class="btn btn-outline-danger" href="/sellers/books/">Cancel</a></td>
+                                        <td><input type="submit" class="btn btn-outline-success" value="Submit"/></td>
                                     </tr>
                                     </tbody>
                                 </table>
@@ -222,7 +232,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">ï¿½</span>
                 </button>
             </div>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

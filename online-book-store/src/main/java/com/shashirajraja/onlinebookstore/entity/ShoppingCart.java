@@ -17,13 +17,13 @@ public class ShoppingCart{
 
 	@Id
 	@JoinColumn(name="customer_id", referencedColumnName="id")
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
 			CascadeType.MERGE, CascadeType.REFRESH})
 	private Customer customer;
 	
 	@Id
 	@JoinColumn(name="book_id", referencedColumnName="id")
-	@ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
+	@ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
 			CascadeType.MERGE, CascadeType.REFRESH})
 	private Book book;
 	

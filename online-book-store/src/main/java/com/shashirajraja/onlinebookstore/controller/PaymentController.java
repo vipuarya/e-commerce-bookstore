@@ -35,7 +35,7 @@ public class PaymentController {
 	public String paymentSuccess(@Param("upi") String upi,@Param("otp") String otp, Model theModel) {
 		Customer customer = currentSession.getUser().getCustomer();
 		//load the purchase history
-		paymentService.getPurchaseHistories(customer);
+		//paymentService.getPurchaseHistories(customer);
 		//create purchase History
 		String transId = paymentService.createTransaction(customer);
 		theModel.addAttribute("message", "Payment Successful with transaction Id: "+ transId);

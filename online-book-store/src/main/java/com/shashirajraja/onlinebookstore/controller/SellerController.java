@@ -116,7 +116,7 @@ public class SellerController {
         }
         book.setBookDetail(bookDetail);
         theModel.addAttribute("message", theBookService.addBook(book));
-        theModel.addAttribute("books", theBookService.getAllBooks());
+        theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
     }
 
@@ -124,7 +124,7 @@ public class SellerController {
     @GetMapping("/books")
     public String viewBooks(Model theModel) {
 
-        Set<Book> books = theBookService.getAllBooks();
+        Set<Book> books = theBookService.getNonDeletedBooks();
         theModel.addAttribute("books", books);
         return "seller-books-list";
     }
@@ -152,19 +152,21 @@ public class SellerController {
             return "seller-book-add";
         }
         theBookService.updateBook(book);
-        theModel.addAttribute("books", theBookService.getAllBooks());
+        theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
     }
 
     @GetMapping("/books/delete")
     public String deleteBookById(@RequestParam("bookId") int id, Model theModel) {
-        try {
-            theModel.addAttribute("message", theBookService.removeBookById(id));
-        }catch (Exception e) {
-            theModel.addAttribute("message", "Not able to delete: Book is preset in cart of some user");
+        Book book = theBookService.getBookById(id);
+        if (book != null) {
+            book.setDeleted(true);
+            theBookService.updateBook(book);
+            theModel.addAttribute("message", "Book " + book.getName() + " deletion is successful");
+        } else {
+            theModel.addAttribute("message", "Book deletion is unsuccessful");
         }
-
-        theModel.addAttribute("books", theBookService.getAllBooks());
+        theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
     }
 

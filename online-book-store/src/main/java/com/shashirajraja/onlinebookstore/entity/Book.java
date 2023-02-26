@@ -37,25 +37,19 @@ public class Book {
 	@JoinColumn(name="book_detail_id", referencedColumnName="id")
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private BookDetail bookDetail;
-	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
-			CascadeType.MERGE, CascadeType.REFRESH})
-	@JoinTable(name="book_user", joinColumns = @JoinColumn(name="book_id"),
-								inverseJoinColumns = @JoinColumn(name="customer_id"))
-	private List<Customer> customers;
-	
-	@OneToMany(mappedBy="book", fetch = FetchType.LAZY, cascade = {CascadeType.DETACH, CascadeType.PERSIST,
-			CascadeType.MERGE, CascadeType.REFRESH})
-	private List<ShoppingCart> shoppingCart;
+
+	@Column(name="deleted")
+	private boolean deleted;
 	
 	public Book() {}
 
-	public Book(String name, int quantity, double price, BookDetail bookDetail) {
+	public Book(String name, int quantity, double price, BookDetail bookDetail,boolean deleted) {
 		super();
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.bookDetail = bookDetail;
+		this.deleted = deleted;
 	}
 
 	public int getId() {
@@ -97,14 +91,6 @@ public class Book {
 	public void setBookDetail(BookDetail bookDetail) {
 		this.bookDetail = bookDetail;
 	}
-	
-	public List<Customer> getCustomers() {
-		return customers;
-	}
-
-	public void setCustomers(List<Customer> customers) {
-		this.customers = customers;
-	}
 
 	@Override
 	public String toString() {
@@ -112,12 +98,11 @@ public class Book {
 				+ bookDetail + "]";
 	}
 
-	public List<ShoppingCart> getShoppingCart() {
-		return shoppingCart;
+	public boolean isDeleted() {
+		return deleted;
 	}
 
-	public void setShoppingCart(List<ShoppingCart> shoppingCart) {
-		this.shoppingCart = shoppingCart;
+	public void setDeleted(boolean deleted) {
+		this.deleted = deleted;
 	}
-	
 }

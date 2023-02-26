@@ -32,6 +32,18 @@ public class BookServiceImpl implements BookService {
 
 	@Override
 	@Transactional
+	public Set<Book> getNonDeletedBooks() {
+
+		Set<Book> books = new HashSet<Book>();
+
+		books.addAll(theBook.getNonDeletedBooks());
+
+		return books;
+	}
+
+
+	@Override
+	@Transactional
 	public Book getBookById(int bookId) {
 		
 		Optional<Book> bookOpt = theBook.findById(bookId);

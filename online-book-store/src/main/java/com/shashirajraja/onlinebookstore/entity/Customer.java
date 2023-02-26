@@ -43,15 +43,10 @@ public class Customer {
 												CascadeType.MERGE, CascadeType.REFRESH})
 	private User user;
 	
-	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinTable(name="book_user", joinColumns=@JoinColumn(name="customer_id"), 
-								inverseJoinColumns=@JoinColumn(name="book_id"))
-	private Set<Book> books;
-	
-	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval= true)
+	@OneToMany(mappedBy = "customer", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<ShoppingCart> shoppingCart;
 	
-	@OneToMany(mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "customer",fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private Set<PurchaseHistory> purchaseHistories;
 	
 	public Customer() {
@@ -122,16 +117,6 @@ public class Customer {
 		this.user = user;
 	}
 
-	public Set<Book> getBooks() {
-		return books;
-	}
-
-	public void setBooks(Set<Book> books) {
-		this.books.clear();
-		if(books != null)
-			this.books.addAll(books);
-	}
-
 	public void setUser(User user) {
 		this.user = user;
 	}
@@ -152,7 +137,7 @@ public class Customer {
 				+ email + ", mobile=" + mobile + ", address=" + address + ", user=" + user + "]";
 	}
 
-	
+
 	public Set<ShoppingCart> addShoppingCart(ShoppingCart shoppingCart) {
 		if(this.shoppingCart == null)
 			this.shoppingCart = new HashSet<ShoppingCart>();

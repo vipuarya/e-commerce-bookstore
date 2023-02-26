@@ -32,7 +32,7 @@ public class BookController {
 	@GetMapping({"","/"})
 	public String viewBooks(Model theModel) {
 		//load the books
-		Set<Book> books = theBookService.getAllBooks(); 
+		Set<Book> books = theBookService.getNonDeletedBooks();
 		theModel.addAttribute("books", books);
 		
 		Customer customer = currentSession.getUser().getCustomer();

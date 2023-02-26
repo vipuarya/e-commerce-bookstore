@@ -131,7 +131,7 @@
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Category: ${bookDetail.type}</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Present Category: ${bookDetail.type}</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -163,7 +163,6 @@
                                     <form:form modelAttribute="bookDetail">
                                         <jsp:useBean id="bookDetail" scope="request" type="com.shashirajraja.onlinebookstore.entity.BookDetail"/>
                                         <form:hidden path="id"/>
-                                        <form:hidden path="type"/>
                                         <tr>
                                             <td style="color:green;">Book Details:</td>
                                             <td><form:textarea id="detail"
@@ -173,14 +172,41 @@
                                                                required="required"/></td>
                                         <tr>
                                             <td style="color:green;">Type:</td>
-                                            <td><input type="text" value="${bookDetail.type}"
-                                                       readonly="readonly"/></td>
-                                        </tr>
+
+                                        <td><form:select path="type" required="required">
+                                            <form:option value="Horror"
+                                                         label="Horror"
+                                                         selected='<%= (bookDetail.getType().equals("Horror"))? "true": ""%>'/>
+                                            <form:option value="Cubs"
+                                                         label="Cubs"
+                                                         selected='<%= (bookDetail.getType().equals("Cubs"))? "true": ""%>'/>
+                                            <form:option value="Science Fiction"
+                                                         label="Science Fiction"
+                                                         selected='<%= (bookDetail.getType().equals("Science Fiction"))? "true": ""%>'/>
+                                            <form:option value="Adventure"
+                                                         label="Adventure"
+                                                         selected='<%= (bookDetail.getType().equals("Adventure"))? "true": ""%>'/>
+                                            <form:option value="Motivational"
+                                                         label="Motivational"
+                                                         selected='<%= (bookDetail.getType().equals("Motivational"))? "true": ""%>'/>
+                                            <form:option value="Art"
+                                                         label="Art"
+                                                         selected='<%= (bookDetail.getType().equals("Art"))? "true": ""%>'/>
+                                            <form:option value="Health"
+                                                         label="Health"
+                                                         selected='<%= (bookDetail.getType().equals("Health"))? "true": ""%>'/>
+                                            <form:option value="Humor"
+                                                         label="Humor"
+                                                         selected='<%= (bookDetail.getType().equals("Humor"))? "true": ""%>'/>
+                                        </form:select>
+                                        </td>
+                                    </tr>
                                     </form:form>
                                     </tr>
                                     <tr>
-                                        <td><input type="submit" class="button btn-success" value="Submit"/></td>
-                                        <td><a class="btn btn-default" href="/sellers/books/">Cancel</a></td>
+                                        <td><a class="btn btn-outline-danger" href="/sellers/books/">Cancel</a></td>
+                                        <td><input type="submit" class="btn btn-outline-success" value="Submit"/></td>
+
                                     </tr>
                                     </tbody>
                                 </table>
@@ -224,7 +250,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
+                    <span aria-hidden="true">ï¿½</span>
                 </button>
             </div>
             <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>

@@ -4,19 +4,15 @@ import java.util.*;
 
 import javax.transaction.Transactional;
 
+import com.shashirajraja.onlinebookstore.dao.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.shashirajraja.onlinebookstore.dao.BookUserRepository;
-import com.shashirajraja.onlinebookstore.dao.CustomerRepository;
-import com.shashirajraja.onlinebookstore.dao.PurchaseDetailRepository;
-import com.shashirajraja.onlinebookstore.dao.PurchaseHistoryRepository;
 import com.shashirajraja.onlinebookstore.entity.Book;
 import com.shashirajraja.onlinebookstore.entity.BookUser;
 import com.shashirajraja.onlinebookstore.entity.BookUserId;
 import com.shashirajraja.onlinebookstore.entity.Customer;
 import com.shashirajraja.onlinebookstore.entity.PurchaseDetail;
-import com.shashirajraja.onlinebookstore.entity.PurchaseDetailId;
 import com.shashirajraja.onlinebookstore.entity.PurchaseHistory;
 import com.shashirajraja.onlinebookstore.entity.ShoppingCart;
 import com.shashirajraja.onlinebookstore.utility.IDUtil;
@@ -25,7 +21,7 @@ import com.shashirajraja.onlinebookstore.utility.IDUtil;
 public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
-	CustomerRepository customerRepos;
+	ShoppingCartRepository shoppingCartRepository;
 	
 	@Autowired
 	PurchaseHistoryRepository purchaseHistoryRepos;
@@ -69,7 +65,9 @@ public class PaymentServiceImpl implements PaymentService {
 		try {
 			customer.addPurchaseHistories(purchaseHistory);
 			customer.getShoppingCart().clear();
-			customerRepos.save(customer);
+			purchaseHistoryRepos.save(purchaseHistory);
+
+			//customerRepos.save(customer);
 			//add the books to the customers service
 			for(Book item: books) {
 				BookUserId theId = new BookUserId(item, customer);
@@ -80,9 +78,18 @@ public class PaymentServiceImpl implements PaymentService {
 						throw new RuntimeException("Book and user relation not established!");
 				}
 			}
+			//remove books from cart
+			shoppingCartRepository.removeByCustomerId(customer.getUsername());
+//			for(Book item: books) {
+//				shoppingCartRepository.removeByIds(customer.getUsername(), item.getId());
+//			}
+
 		}
 		catch(Exception ex) {
 			customer.getPurchaseHistories().remove(purchaseHistory);
+			for(Book item: books) {
+				shoppingCartRepository.addByIds(customer.getUsername(), item.getId(), 1);
+			}
 			customer.setShoppingCart(items);
 			ex.printStackTrace();
 		}
@@ -93,10 +100,7 @@ public class PaymentServiceImpl implements PaymentService {
 	@Transactional
 	public Set<PurchaseHistory> getPurchaseHistories(Customer customer) {
 		Set<PurchaseHistory> histories = new HashSet<PurchaseHistory>();
-		//If missing then only add
-		if(purchaseHistoryRepos.findAllByCustomer(customer).size() != customer.getPurchaseHistories().size()) {
-			histories.addAll(purchaseHistoryRepos.findAllByCustomer(customer));
-		}
+		histories.addAll(purchaseHistoryRepos.findAllByCustomer(customer));
 		customer.setPurchaseHistories(histories);
 		return histories;
 	}
