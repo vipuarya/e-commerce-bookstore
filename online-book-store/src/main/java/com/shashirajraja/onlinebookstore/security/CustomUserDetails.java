@@ -53,7 +53,10 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<? extends GrantedAuthority> collect = new LinkedList<>();
+        Collection<GrantedAuthority> collect = new LinkedList<>();
+        for(GrantedAuthority authority: user.getAuthorities()){
+            collect.add(authority);
+        }
         return collect;
     }
 

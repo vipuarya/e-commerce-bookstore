@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/customers/**").authenticated()
-				.antMatchers("/sellers/**").authenticated()
+		http.authorizeRequests().antMatchers("/customers/**").hasRole("CUSTOMER")
+				.antMatchers("/sellers/**").hasAnyRole("ADMIN","CUSTOMER") //at real time could be admin only
 				.antMatchers("/**").permitAll().and().formLogin().loginPage("/login").loginProcessingUrl("/authenticateTheUser").permitAll()
 				.and()
 				.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
