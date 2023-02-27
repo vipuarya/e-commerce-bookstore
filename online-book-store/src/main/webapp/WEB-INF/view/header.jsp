@@ -76,13 +76,13 @@
 
         <!-- Nav Item - Books List -->
         <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/books">
+            <a class="nav-link" href="${pageContext.request.contextPath}/customers/books">
                 <i class="fas fa-fw fa-book"></i>
                 <span> Books Available</span></a>
         </li>
 
         <li class="nav-item">
-            <a class="nav-link" href="${pageContext.request.contextPath}/customers/books">
+            <a class="nav-link" href="${pageContext.request.contextPath}/customers/purchased-books">
                 <i class="fas fa-fw fa-book"></i>
                 <span> Books Purchased</span></a>
         </li>

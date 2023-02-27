@@ -1,5 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page import="java.util.*, com.shashirajraja.onlinebookstore.entity.ShoppingCart" %>
 <jsp:include page="header.jsp"/>
 
       <!-- Main Content -->
