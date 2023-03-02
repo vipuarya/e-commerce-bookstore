@@ -79,7 +79,7 @@
                   </form:form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="${pageContext.request.contextPath}/register">Register</a>
+                    <a class="small" href="${pageContext.request.contextPath}/">View book Catalog</a>
                   </div>
                 </div>
               </div>

@@ -22,6 +22,9 @@ public class PaymentServiceImpl implements PaymentService {
 
 	@Autowired
 	ShoppingCartRepository shoppingCartRepository;
+
+	@Autowired
+	BookRepository bookRepository;
 	
 	@Autowired
 	PurchaseHistoryRepository purchaseHistoryRepos;
@@ -80,9 +83,10 @@ public class PaymentServiceImpl implements PaymentService {
 			}
 			//remove books from cart
 			shoppingCartRepository.removeByCustomerId(customer.getUsername());
-//			for(Book item: books) {
-//				shoppingCartRepository.removeByIds(customer.getUsername(), item.getId());
-//			}
+			for(Book item: books) {
+				if(item.getQuantity()==0) item.getBookDetail().setSold(1);
+				bookRepository.save(item);
+			}
 
 		}
 		catch(Exception ex) {

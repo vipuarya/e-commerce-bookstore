@@ -108,12 +108,14 @@ public class SellerController {
     @PostMapping("/books/add")
     @ResponseStatus(HttpStatus.CREATED)
     public String addNewBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, Model theModel) {
-        if (book.getPrice() <= 0 || book.getQuantity() <= 0) {
-            theModel.addAttribute("message", "Price/Quantity should be greater than zero");
+        boolean invalid = false;
+        invalid = isInvalid(book, theModel, invalid);
+        if(invalid) {
             theModel.addAttribute("book", book);
             theModel.addAttribute("bookDetail", bookDetail);
             return "seller-book-add";
         }
+        if(book.getQuantity() == 0) bookDetail.setSold(1);
         book.setBookDetail(bookDetail);
         theModel.addAttribute("message", theBookService.addBook(book));
         theModel.addAttribute("books", theBookService.getNonDeletedBooks());
@@ -144,16 +146,33 @@ public class SellerController {
     @PostMapping("/books/update")
     @ResponseStatus(HttpStatus.OK)
     public String updateBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, Model theModel) {
-        book.setBookDetail(bookDetail);
-        if (book.getPrice() <= 0 || book.getQuantity() <= 0) {
-            theModel.addAttribute("message", "Price/Quantity should be greater than zero");
+        boolean invalid = false;
+        invalid = isInvalid(book, theModel, invalid);
+
+        if(invalid) {
             theModel.addAttribute("book", book);
             theModel.addAttribute("bookDetail", bookDetail);
-            return "seller-book-add";
+            return "seller-book-edit";
         }
+        if(book.getQuantity()>0) bookDetail.setSold(0);
+        book.setBookDetail(bookDetail);
         theBookService.updateBook(book);
         theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
+    }
+
+    private boolean isInvalid(Book book, Model theModel, boolean invalid) {
+        theModel.addAttribute("message", "");
+        if (book.getPrice() <= 0) {
+            invalid = true;
+            theModel.addAttribute("message", "Price should be greater than zero");
+        }
+        if (book.getQuantity() < 0) {
+            invalid = true;
+            String message = theModel.getAttribute("message") != "" ? theModel.getAttribute("message") + "and Quantity should not be negative" : "Quantity should not be negative";
+            theModel.addAttribute("message", message);
+        }
+        return invalid;
     }
 
     @GetMapping("/books/delete")

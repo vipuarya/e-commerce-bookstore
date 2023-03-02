@@ -2,6 +2,8 @@ package com.shashirajraja.onlinebookstore.controller;
 
 import javax.servlet.http.HttpSession;
 
+import com.shashirajraja.onlinebookstore.entity.Book;
+import com.shashirajraja.onlinebookstore.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.shashirajraja.onlinebookstore.entity.CurrentSession;
 import com.shashirajraja.onlinebookstore.service.UserService;
+
+import java.util.Set;
 
 @Controller
 public class LoginController {
@@ -18,6 +22,9 @@ public class LoginController {
 	
 	@Autowired
 	CurrentSession currentSession;
+
+	@Autowired
+	BookService theBookService;
 	
 	@GetMapping("/login")
 	public String showLoginForm(HttpSession session) {
@@ -28,6 +35,12 @@ public class LoginController {
 	@GetMapping({"/",""})
 	public String showHome(Model theModel) {
 		//theModel.addAttribute("username", currentSession.getUser().getUsername());
+		Set<Book> books = theBookService.getNonDeletedBooks();
+		theModel.addAttribute("books", books);
+		if(currentSession.getUser() != null) {
+			theModel.addAttribute("shoppingItems", currentSession.getUser().getCustomer().getShoppingCart());
+			return "customer-books-list";
+		}
 		return "customer-home";
 	}
 	

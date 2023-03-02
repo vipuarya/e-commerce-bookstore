@@ -38,8 +38,13 @@ public class PaymentController {
 		//paymentService.getPurchaseHistories(customer);
 		//create purchase History
 		String transId = paymentService.createTransaction(customer);
-		theModel.addAttribute("message", "Payment Successful with transaction Id: "+ transId);
-		theModel.addAttribute("purchaseHistory", paymentService.getPurchaseHistory(customer, transId));
+		if (transId != null && transId.contains("Book named:")) {
+			theModel.addAttribute("message", transId);
+		} else {
+			theModel.addAttribute("message", "Payment Successful with transaction Id: "+ transId);
+			theModel.addAttribute("purchaseHistory", paymentService.getPurchaseHistory(customer, transId));
+		}
+
 		return "customer-transaction-detail";
 	}
 	
