@@ -91,6 +91,14 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
+	@Transactional
+	public Set<Book> searchBooksByType(String search) {
+		Set<Book> books = new HashSet<Book>(theBook.searchBooksByType("%" + search.toLowerCase() + "%"));
+		return books;
+	}
+
+
+	@Override
 	public String removeBook(Book book) {
 		Optional<Book> optBook = theBook.findById(book.getId());
 		

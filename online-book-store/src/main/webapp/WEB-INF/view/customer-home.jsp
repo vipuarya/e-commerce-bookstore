@@ -32,6 +32,76 @@
 
 <!-- Page Wrapper -->
 <div id="wrapper">
+    <!-- Sidebar -->
+    <ul class="navbar-nav bg-gradient-dark sidebar sidebar-dark accordion" id="accordionSidebar">
+
+        <!-- Sidebar - Brand -->
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${pageContext.request.contextPath}">
+            <div class="sidebar-brand-icon rotate-n-15">
+                <i class="fas fa-laugh-wink"></i>
+            </div>
+            <div class="sidebar-brand-text mx-3">Book Store</div>
+        </a>
+
+        <!-- Divider -->
+        <hr class="sidebar-divider my-0">
+        <!-- Divider -->
+        <hr class="sidebar-divider">
+
+        <!-- Heading -->
+        <div class="sidebar-heading">
+            Categories
+        </div>
+
+        <!-- Nav Item - Books List -->
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Horror">
+                <i class="fas fa-fw fa-book"></i>
+                <span> Horror</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Cubs">
+                <i class="fas fa-fw fa-book"></i>
+                <span> Cubs</span></a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Science Fiction">
+                <i class="fas fa-fw fa-book"></i>
+                <span> Science Fiction</span></a>
+        </li>
+
+        <!-- Nav Item - Cart -->
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Adventure">
+                <i class="fas fa-fw fa-shopping-cart"></i>
+                <span>Adventure</span></a>
+        </li>
+
+        <!-- View Transactions History -->
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Motivational">
+                <i class="fas fa-fw fa-shopping-cart"></i>
+                <span>Motivational</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Art">
+                <i class="fas fa-fw fa-shopping-cart"></i>
+                <span>Art</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Health">
+                <i class="fas fa-fw fa-shopping-cart"></i>
+                <span>Health</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="${pageContext.request.contextPath}/books/searching?name=Humor">
+                <i class="fas fa-fw fa-shopping-cart"></i>
+                <span>Humor</span></a>
+        </li>
+
+    </ul>
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
         <!-- Main Content -->
@@ -46,14 +116,14 @@
                 </button>
 
                 <!-- Topbar Search -->
-                <h1 class="h3 mb-2 text-gray-800">Book Store</h1>
+                <h1 class="h3 mb-2 text-gray-800">Books Catalog</h1>
 
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Nav Item - User Information -->
                     <li class="nav-item dropdown no-arrow">
                         <a class="dropdown-item" href="${pageContext.request.contextPath}/login">
-                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                             Login
                         </a>
                     </li>
@@ -65,9 +135,6 @@
 
             <!-- Begin Page Content -->
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <div class="sidebar-brand-text mx-3">Books Catalog</div>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
@@ -94,7 +161,7 @@
                                         <td><c:out value="${book.quantity}"/></td>
                                         <td><c:out value="${book.price}"/></td>
 
-                                        <td><c:out value="${book.bookDetail.detail}dsfffffffffffffffffffffffff"/></td>
+                                        <td><c:out value="${book.bookDetail.detail}"/></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

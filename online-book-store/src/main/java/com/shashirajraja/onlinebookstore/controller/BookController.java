@@ -43,5 +43,13 @@ public class BookController {
 		theModel.addAttribute("shoppingItems", shoppingItems);
 		return "customer-books-list";
 	}
+	@GetMapping("/searching")
+	public String searchBooks(@RequestParam("name") String search, Model theModel) {
+		Set<Book> books = null;
+		books = theBookService.searchBooksByType(search);
+		theModel.addAttribute("books", books);
+		System.out.println(search);
+		return "customer-home";
+	}
 	
 }

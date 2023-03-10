@@ -22,4 +22,6 @@ public interface BookService {
 	public String addBook(Book book);
 	
 	public Set<Book> searchBooks(String search);
+
+	public Set<Book> searchBooksByType(String search);
 }
