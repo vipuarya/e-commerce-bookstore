@@ -56,7 +56,11 @@
 
                                         <td style="color:green; text-align: center">
                                             <a href="${editBookLink}"><i class="fas fa-edit" style="font-size:24px;"></i></a>
-                                            <a href="${deleteBookLink}" data-toggle="modal" data-target="#deleteModal"><i class="fas fa-trash" style="font-size:24px;"></i></a>
+
+                                            <a onclick="return confirm('Do you really want to delete the book ${book.name}?')"
+                                               href="${deleteBookLink}"><i class="fas fa-trash"
+                                                                           style="font-size:24px;"></i></a>
+
                                         </td>
                                     </tr>
                                 </c:forEach>
@@ -111,24 +115,24 @@
     </div>
 </div>
 
-<!-- Delete Modal-->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel1">Are you sure?</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">x</span>
-                </button>
-            </div>
-            <div class="modal-body">You wanna delete this item.</div>
-            <div class="modal-footer">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-primary" href="${deleteBookLink}">Ok</a>
-            </div>
-        </div>
-    </div>
-</div>
+<%--<!-- Delete Modal-->--%>
+<%--<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel1" aria-hidden="true">--%>
+<%--    <div class="modal-dialog" role="document">--%>
+<%--        <div class="modal-content">--%>
+<%--            <div class="modal-header">--%>
+<%--                <h5 class="modal-title" id="exampleModalLabel1">Are you sure?</h5>--%>
+<%--                <button class="close" type="button" data-dismiss="modal" aria-label="Close">--%>
+<%--                    <span aria-hidden="true">x</span>--%>
+<%--                </button>--%>
+<%--            </div>--%>
+<%--            <div class="modal-body">You wanna delete this item.</div>--%>
+<%--            <div class="modal-footer">--%>
+<%--                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>--%>
+<%--                <a class="btn btn-primary">Ok</a>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
+<%--</div>--%>
 
 <!-- Bootstrap core JavaScript-->
 <script src="${pageContext.request.contextPath}/vendor/jquery/jquery.min.js"></script>
