@@ -63,10 +63,10 @@
                       <input type="password" class="form-control form-control-user" placeholder="Enter Password" name="password">
                     </div>
                     <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
+<%--                      <div class="custom-control custom-checkbox small">--%>
+<%--                        <input type="checkbox" class="custom-control-input" id="customCheck">--%>
+<%--                        <label class="custom-control-label" for="customCheck">Remember Me</label>--%>
+<%--                      </div>--%>
                     </div>
                     <input type="submit" class="btn btn-primary btn-user btn-block" value="Login" />
                     <hr>

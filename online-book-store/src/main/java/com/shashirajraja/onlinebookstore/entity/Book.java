@@ -47,14 +47,13 @@ public class Book {
 
 	public Book() {}
 
-	public Book(String name, int quantity, double price, BookDetail bookDetail,boolean deleted, String bookName) {
+	public Book(String name, int quantity, double price, BookDetail bookDetail,boolean deleted) {
 		super();
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.bookDetail = bookDetail;
 		this.deleted = deleted;
-		//this.bookName = bookName;
 	}
 
 	public int getId() {
