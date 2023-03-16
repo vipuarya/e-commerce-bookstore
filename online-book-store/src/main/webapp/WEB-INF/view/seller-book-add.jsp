@@ -21,7 +21,7 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form:form method="POST" modelAttribute="book" action="/sellers/books/add">
+                            <form:form method="POST" modelAttribute="book" action="/sellers/books/add" enctype="multipart/form-data">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <form:hidden path="id"/>
                                     <tbody>
@@ -55,21 +55,26 @@
                                                                placeholder="Enter Details"
                                                                required="required"/></td>
                                         <tr>
-                                        <td style="color:green;">Type:</td>
-                                        <td><form:select path="type" required="required">
-                                            <form:option value="" label="Select book type"/>
-                                            <form:option value="Horror" label="Horror"/>
-                                            <form:option value="Cubs" label="Cubs"/>
-                                            <form:option value="Science Fiction" label="Science Fiction"/>
-                                            <form:option value="Adventure" label="Adventure"/>
-                                            <form:option value="Motivational" label="Motivational"/>
-                                            <form:option value="Art" label="Art"/>
-                                            <form:option value="Health" label="Health"/>
-                                            <form:option value="Humor" label="Humor"/>
-                                        </form:select>
-                                        </td>
-                                    </tr>
+                                            <td style="color:green;">Type:</td>
+                                            <td><form:select path="type" required="required">
+                                                <form:option value="" label="Select book type"/>
+                                                <form:option value="Horror" label="Horror"/>
+                                                <form:option value="Cubs" label="Cubs"/>
+                                                <form:option value="Science Fiction" label="Science Fiction"/>
+                                                <form:option value="Adventure" label="Adventure"/>
+                                                <form:option value="Motivational" label="Motivational"/>
+                                                <form:option value="Art" label="Art"/>
+                                                <form:option value="Health" label="Health"/>
+                                                <form:option value="Humor" label="Humor"/>
+                                            </form:select>
+                                            </td>
+                                        </tr>
                                     </form:form>
+                                    </tr>
+                                    <tr>
+                                        <td style="color:green;">Upload Image:</td>
+                                        <td><input type="file" name="bookImg" id="bookImg"
+                                                        required="required"/></td>
                                     </tr>
                                     <tr>
                                         <td><a class="btn btn-outline-danger" href="/sellers/books/">Cancel</a></td>

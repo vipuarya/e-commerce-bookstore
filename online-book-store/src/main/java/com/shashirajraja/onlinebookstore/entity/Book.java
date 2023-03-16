@@ -40,16 +40,21 @@ public class Book {
 
 	@Column(name="deleted")
 	private boolean deleted;
-	
+
+//	@Column(name="bookName")
+//	private String bookName;
+
+
 	public Book() {}
 
-	public Book(String name, int quantity, double price, BookDetail bookDetail,boolean deleted) {
+	public Book(String name, int quantity, double price, BookDetail bookDetail,boolean deleted, String bookName) {
 		super();
 		this.name = name;
 		this.quantity = quantity;
 		this.price = price;
 		this.bookDetail = bookDetail;
 		this.deleted = deleted;
+		//this.bookName = bookName;
 	}
 
 	public int getId() {
@@ -96,6 +101,9 @@ public class Book {
 	public String toString() {
 		return "Book [id=" + id + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", bookDetail="
 				+ bookDetail + "]";
+
+//		return "Book [id=" + id + ", name=" + name + ", quantity=" + quantity + ", price=" + price + ", bookDetail="
+//				+ bookDetail + ", bookName=" + bookName + "]";
 	}
 
 	public boolean isDeleted() {
@@ -105,4 +113,12 @@ public class Book {
 	public void setDeleted(boolean deleted) {
 		this.deleted = deleted;
 	}
+
+//	public String getBookName() {
+//		return bookName;
+//	}
+//
+//	public void setBookName(String bookName) {
+//		this.bookName = bookName;
+//	}
 }

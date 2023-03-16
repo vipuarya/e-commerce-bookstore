@@ -1,10 +1,12 @@
 package com.shashirajraja.onlinebookstore.controller;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import com.shashirajraja.onlinebookstore.entity.*;
+import com.shashirajraja.onlinebookstore.utility.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.shashirajraja.onlinebookstore.service.BookService;
 import com.shashirajraja.onlinebookstore.service.BookUserService;
 import com.shashirajraja.onlinebookstore.service.CustomerService;
 import com.shashirajraja.onlinebookstore.service.ShoppingCartService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/sellers")
@@ -36,6 +39,9 @@ public class SellerController {
 
     @Autowired
     private ShoppingCartService theShoppingCartService;
+
+    @Autowired
+    private FileUploadHelper fileUploadHelper;
 
     @GetMapping("")
     public String customerHome(Model theModel) {
@@ -107,7 +113,7 @@ public class SellerController {
 
     @PostMapping("/books/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public String addNewBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, Model theModel) {
+    public String addNewBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, @ModelAttribute("bookImg") MultipartFile bookImg, Model theModel) {
         boolean invalid = false;
         invalid = isInvalid(book, theModel, invalid);
         if(invalid) {
@@ -117,7 +123,20 @@ public class SellerController {
         }
         if(book.getQuantity() == 0) bookDetail.setSold(1);
         book.setBookDetail(bookDetail);
-        theModel.addAttribute("message", theBookService.addBook(book));
+
+        //check for valid book img
+        boolean imageValid = validBookImg(bookImg, theModel);
+
+        if (!imageValid) {
+            return "seller-book-add";
+        }
+
+        //String fileName = fileUploadHelper.uploadFile(bookImg);
+//        String msg = "";
+//        if(fileName.eqauls("")) {
+        //msg = "Unable to load book img, please try again latter. Although"
+//        }
+        theModel.addAttribute("message", theBookService.addBook(book)); //msg + addBook msg
         theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
     }
@@ -173,6 +192,17 @@ public class SellerController {
             theModel.addAttribute("message", message);
         }
         return invalid;
+    }
+
+    public boolean validBookImg(MultipartFile bookImg, Model theModel) {
+        if (bookImg.isEmpty()) {
+            theModel.addAttribute("message", "File can't be empty");
+            return false;
+        } else if (!Objects.equals(bookImg.getContentType(), "image/jpeg")) {
+            theModel.addAttribute("message", "File should be an image(.jpg)");
+            return false;
+        }
+        return true;
     }
 
     @GetMapping("/books/delete")
