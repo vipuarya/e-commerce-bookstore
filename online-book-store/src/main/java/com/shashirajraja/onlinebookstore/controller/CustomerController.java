@@ -101,9 +101,26 @@ public class CustomerController {
 		String username = loggedInUser.getName();
 		return username;
 	}*/
-	
+
 	@GetMapping("/books")
 	public String viewBooks(Model theModel) {
+		//load the books
+		Set<Book> books = theBookService.getNonDeletedBooks();
+		theModel.addAttribute("books", books);
+
+		Customer customer = currentSession.getUser().getCustomer();
+
+		//load shoppingitems
+		Set<ShoppingCart> shoppingItems = theShoppingCartService.getByUsername(customer);
+
+		theModel.addAttribute("shoppingItems", shoppingItems);
+		return "customer-books-list";
+	}
+
+
+
+	@GetMapping("/purchased-books")
+	public String viewPurchasedBooks(Model theModel) {
 		
 		Customer customer = currentSession.getUser().getCustomer();
 		
@@ -123,7 +140,7 @@ public class CustomerController {
 		
 		String message = theShoppingCartService.addItem(customer, theBookService.getBookById(bookId));
 						
-		Set<Book> books = theBookService.getAllBooks();
+		Set<Book> books = theBookService.getNonDeletedBooks();
 		
 		theModel.addAttribute("books", books);
 		
@@ -165,7 +182,7 @@ public class CustomerController {
 		Set<ShoppingCart> shoppingItems = theShoppingCartService.getAllItems(customer);
 		customer.setShoppingCart(shoppingItems);
 		theModel.addAttribute("message", message);
-		Set<Book> books = theBookService.getAllBooks();
+		Set<Book> books = theBookService.getNonDeletedBooks();
 		theModel.addAttribute("books", books);
 		theModel.addAttribute("shoppingItems", shoppingItems);
 		return "customer-books-list";

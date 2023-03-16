@@ -23,7 +23,7 @@
 
 </head>
 
-<body class="bg-gradient-primary">
+<body class="bg-gradient-dark">
 
   <div class="container">
 
@@ -63,10 +63,10 @@
                       <input type="password" class="form-control form-control-user" placeholder="Enter Password" name="password">
                     </div>
                     <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
+<%--                      <div class="custom-control custom-checkbox small">--%>
+<%--                        <input type="checkbox" class="custom-control-input" id="customCheck">--%>
+<%--                        <label class="custom-control-label" for="customCheck">Remember Me</label>--%>
+<%--                      </div>--%>
                     </div>
                     <input type="submit" class="btn btn-primary btn-user btn-block" value="Login" />
                     <hr>
@@ -79,7 +79,7 @@
                   </form:form>
                   <hr>
                   <div class="text-center">
-                    <a class="small" href="${pageContext.request.contextPath}/register">Register</a>
+                    <a class="small" href="${pageContext.request.contextPath}/">View book Catalog</a>
                   </div>
                 </div>
               </div>

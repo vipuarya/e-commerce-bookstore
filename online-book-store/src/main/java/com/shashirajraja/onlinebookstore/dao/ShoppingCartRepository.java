@@ -36,6 +36,11 @@ public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, Shop
 	@Modifying
 	@Query(value = "delete from shopping_cart where customer_id = ?1 and book_id = ?2", nativeQuery = true)
 	public int removeByIds(String customerId, Integer bookId);
+
+	@Transactional
+	@Modifying
+	@Query(value = "delete from shopping_cart where customer_id = ?1", nativeQuery = true)
+	public int removeByCustomerId(String customerId);
 	
 	@Transactional
 	@Modifying

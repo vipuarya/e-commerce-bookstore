@@ -1,6 +1,8 @@
 package com.shashirajraja.onlinebookstore.entity;
 
 
+import org.springframework.security.core.GrantedAuthority;
+
 import java.util.Objects;
 
 import javax.persistence.CascadeType;
@@ -16,7 +18,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="authorities")
 @IdClass(AuthorityId.class)
-public class Authority{
+public class Authority implements GrantedAuthority {
 
 	
 	@Id
@@ -75,5 +77,9 @@ public class Authority{
 		
 		return this.user.getUsername().equals(authority.getUser().getUsername()) && this.role.equals(authority.getRole());
 	}
-	
+
+	@Override
+	public String getAuthority() {
+		return role;
+	}
 }

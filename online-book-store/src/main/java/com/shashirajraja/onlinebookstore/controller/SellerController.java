@@ -1,10 +1,12 @@
 package com.shashirajraja.onlinebookstore.controller;
 
+import java.util.Objects;
 import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
 import com.shashirajraja.onlinebookstore.entity.*;
+import com.shashirajraja.onlinebookstore.utility.FileUploadHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import com.shashirajraja.onlinebookstore.service.BookService;
 import com.shashirajraja.onlinebookstore.service.BookUserService;
 import com.shashirajraja.onlinebookstore.service.CustomerService;
 import com.shashirajraja.onlinebookstore.service.ShoppingCartService;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/sellers")
@@ -36,6 +39,9 @@ public class SellerController {
 
     @Autowired
     private ShoppingCartService theShoppingCartService;
+
+    @Autowired
+    private FileUploadHelper fileUploadHelper;
 
     @GetMapping("")
     public String customerHome(Model theModel) {
@@ -107,16 +113,31 @@ public class SellerController {
 
     @PostMapping("/books/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public String addNewBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, Model theModel) {
-        if (book.getPrice() <= 0 || book.getQuantity() <= 0) {
-            theModel.addAttribute("message", "Price/Quantity should be greater than zero");
+    public String addNewBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, @ModelAttribute("bookImg") MultipartFile bookImg, Model theModel) {
+        boolean invalid = false;
+        invalid = isInvalid(book, theModel, invalid);
+        if(invalid) {
             theModel.addAttribute("book", book);
             theModel.addAttribute("bookDetail", bookDetail);
             return "seller-book-add";
         }
+        if(book.getQuantity() == 0) bookDetail.setSold(1);
         book.setBookDetail(bookDetail);
-        theModel.addAttribute("message", theBookService.addBook(book));
-        theModel.addAttribute("books", theBookService.getAllBooks());
+
+        //check for valid book img
+        boolean imageValid = validBookImg(bookImg, theModel);
+
+        if (!imageValid) {
+            return "seller-book-add";
+        }
+
+        //String fileName = fileUploadHelper.uploadFile(bookImg);
+//        String msg = "";
+//        if(fileName.eqauls("")) {
+        //msg = "Unable to load book img, please try again latter. Although"
+//        }
+        theModel.addAttribute("message", theBookService.addBook(book)); //msg + addBook msg
+        theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
     }
 
@@ -124,7 +145,7 @@ public class SellerController {
     @GetMapping("/books")
     public String viewBooks(Model theModel) {
 
-        Set<Book> books = theBookService.getAllBooks();
+        Set<Book> books = theBookService.getNonDeletedBooks();
         theModel.addAttribute("books", books);
         return "seller-books-list";
     }
@@ -144,27 +165,57 @@ public class SellerController {
     @PostMapping("/books/update")
     @ResponseStatus(HttpStatus.OK)
     public String updateBook(@ModelAttribute("book") Book book, @ModelAttribute("bookDetail") BookDetail bookDetail, Model theModel) {
-        book.setBookDetail(bookDetail);
-        if (book.getPrice() <= 0 || book.getQuantity() <= 0) {
-            theModel.addAttribute("message", "Price/Quantity should be greater than zero");
+        boolean invalid = false;
+        invalid = isInvalid(book, theModel, invalid);
+
+        if(invalid) {
             theModel.addAttribute("book", book);
             theModel.addAttribute("bookDetail", bookDetail);
-            return "seller-book-add";
+            return "seller-book-edit";
         }
+        if(book.getQuantity()>0) bookDetail.setSold(0);
+        book.setBookDetail(bookDetail);
         theBookService.updateBook(book);
-        theModel.addAttribute("books", theBookService.getAllBooks());
+        theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
+    }
+
+    private boolean isInvalid(Book book, Model theModel, boolean invalid) {
+        theModel.addAttribute("message", "");
+        if (book.getPrice() <= 0) {
+            invalid = true;
+            theModel.addAttribute("message", "Price should be greater than zero");
+        }
+        if (book.getQuantity() < 0) {
+            invalid = true;
+            String message = theModel.getAttribute("message") != "" ? theModel.getAttribute("message") + "and Quantity should not be negative" : "Quantity should not be negative";
+            theModel.addAttribute("message", message);
+        }
+        return invalid;
+    }
+
+    public boolean validBookImg(MultipartFile bookImg, Model theModel) {
+        if (bookImg.isEmpty()) {
+            theModel.addAttribute("message", "File can't be empty");
+            return false;
+        } else if (!Objects.equals(bookImg.getContentType(), "image/jpeg")) {
+            theModel.addAttribute("message", "File should be an image(.jpg)");
+            return false;
+        }
+        return true;
     }
 
     @GetMapping("/books/delete")
     public String deleteBookById(@RequestParam("bookId") int id, Model theModel) {
-        try {
-            theModel.addAttribute("message", theBookService.removeBookById(id));
-        }catch (Exception e) {
-            theModel.addAttribute("message", "Not able to delete: Book is preset in cart of some user");
+        Book book = theBookService.getBookById(id);
+        if (book != null) {
+            book.setDeleted(true);
+            theBookService.updateBook(book);
+            theModel.addAttribute("message", "Book " + book.getName() + " deletion is successful");
+        } else {
+            theModel.addAttribute("message", "Book deletion is unsuccessful");
         }
-
-        theModel.addAttribute("books", theBookService.getAllBooks());
+        theModel.addAttribute("books", theBookService.getNonDeletedBooks());
         return "seller-books-list";
     }
 

@@ -15,7 +15,13 @@ import com.shashirajraja.onlinebookstore.entity.Book;
 public interface BookRepository extends JpaRepository<Book, Integer> {
 
 	
-	@Query("from Book where lower(name) like :search")
+	@Query("from Book b where b.deleted=false and lower(b.bookDetail.type) like :search")
+	List<Book> searchBooksByType(@Param("search") String search);
+
+	@Query("from Book where deleted=false and lower(name) like :search")
 	List<Book> searchBooks(@Param("search") String search);
+
+	@Query("from Book where deleted=false")
+	List<Book> getNonDeletedBooks();
 
 }

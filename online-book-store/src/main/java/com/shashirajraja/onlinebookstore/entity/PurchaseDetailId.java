@@ -5,36 +5,42 @@ import java.util.Objects;
 
 public class PurchaseDetailId implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	private PurchaseHistory purchaseHistory;
-	
-	private Book book;
-	
-	public PurchaseHistory getPurchaseHistory() {
-		return purchaseHistory;
-	}
+    private PurchaseHistory purchaseHistory;
 
-	public void setPurchaseHistory(PurchaseHistory purchaseHistory,Book book) {
-		this.purchaseHistory = purchaseHistory;
-		this.book = book;
-	}
+    private Book book;
 
-	public Book getBook() {
-		return book;
-	}
+    public  PurchaseDetailId() {}
 
-	public void setBook(Book book) {
-		this.book = book;
-	}
+    public PurchaseDetailId(PurchaseHistory purchaseHistory, Book book) {
+        this.purchaseHistory = purchaseHistory;
+        this.book = book;
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(purchaseHistory.getId(), book.getId());
-	}
+    public PurchaseHistory getPurchaseHistory() {
+        return purchaseHistory;
+    }
+
+    public void setPurchaseHistory(PurchaseHistory purchaseHistory) {
+        this.purchaseHistory = purchaseHistory;
+    }
+
+    public Book getBook() {
+        return book;
+    }
+
+    public void setBook(Book book) {
+        this.book = book;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(purchaseHistory.getId(), book.getId());
+    }
 
 	@Override
 	public boolean equals(Object obj) {

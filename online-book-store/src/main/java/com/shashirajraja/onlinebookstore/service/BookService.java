@@ -9,7 +9,8 @@ import com.shashirajraja.onlinebookstore.entity.Book;
 public interface BookService {
 
 	public Set<Book> getAllBooks();
-	
+	public Set<Book> getNonDeletedBooks();
+
 	public Book getBookById(int bookId);
 	
 	public String updateBook(Book book);
@@ -21,4 +22,6 @@ public interface BookService {
 	public String addBook(Book book);
 	
 	public Set<Book> searchBooks(String search);
+
+	public Set<Book> searchBooksByType(String search);
 }

@@ -35,11 +35,16 @@ public class PaymentController {
 	public String paymentSuccess(@Param("upi") String upi,@Param("otp") String otp, Model theModel) {
 		Customer customer = currentSession.getUser().getCustomer();
 		//load the purchase history
-		paymentService.getPurchaseHistories(customer);
+		//paymentService.getPurchaseHistories(customer);
 		//create purchase History
 		String transId = paymentService.createTransaction(customer);
-		theModel.addAttribute("message", "Payment Successful with transaction Id: "+ transId);
-		theModel.addAttribute("purchaseHistory", paymentService.getPurchaseHistory(customer, transId));
+		if (transId != null && transId.contains("Book named:")) {
+			theModel.addAttribute("message", transId);
+		} else {
+			theModel.addAttribute("message", "Payment Successful with transaction Id: "+ transId);
+			theModel.addAttribute("purchaseHistory", paymentService.getPurchaseHistory(customer, transId));
+		}
+
 		return "customer-transaction-detail";
 	}
 	

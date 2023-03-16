@@ -32,7 +32,7 @@ public class BookController {
 	@GetMapping({"","/"})
 	public String viewBooks(Model theModel) {
 		//load the books
-		Set<Book> books = theBookService.getAllBooks(); 
+		Set<Book> books = theBookService.getNonDeletedBooks();
 		theModel.addAttribute("books", books);
 		
 		Customer customer = currentSession.getUser().getCustomer();
@@ -42,6 +42,14 @@ public class BookController {
 		
 		theModel.addAttribute("shoppingItems", shoppingItems);
 		return "customer-books-list";
+	}
+	@GetMapping("/searching")
+	public String searchBooks(@RequestParam("name") String search, Model theModel) {
+		Set<Book> books = null;
+		books = theBookService.searchBooksByType(search);
+		theModel.addAttribute("books", books);
+		System.out.println(search);
+		return "customer-home";
 	}
 	
 }

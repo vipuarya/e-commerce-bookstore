@@ -21,7 +21,7 @@ public class PurchaseDetail{
 	
 	@Id
 	@JoinColumn(name="book_id")
-	@OneToOne
+	@ManyToOne
 	Book book;
 	
 	
